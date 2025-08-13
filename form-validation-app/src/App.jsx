@@ -1,8 +1,8 @@
-
+import FormValidation from "./FormValidation";
 function App(){
   return(
     <>
-      
+      <FormValidation/>
     </>
   )
 }
