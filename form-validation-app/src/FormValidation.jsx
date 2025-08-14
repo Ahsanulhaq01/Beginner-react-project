@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function FormValidation() {
   const [seePass, setSeePass] = useState(true);
   const [formData, setFormData] = useState({});
   const [error, setError] = useState({});
+  const refSubmitbtn = useRef(null)
 
   function handleSeeIcon() {
     setSeePass(seePass ? false : true);
@@ -81,7 +82,9 @@ function FormValidation() {
     }
   }
   function handleSubmit() {
-    console.log(formData);
+    if(!error){
+      console.log(refSubmitbtn.current)
+    }
   }
 
   return (
@@ -97,7 +100,6 @@ function FormValidation() {
             id="name-input"
             required
             className="input-field"
-            value={formData.name}
             onChange={handleNameInput}
           />
           {error.name && <p className="name-error error">{error.name}</p>}
@@ -110,7 +112,6 @@ function FormValidation() {
             required
             id="email-input"
             className="input-field"
-            value={formData.email}
             onChange={handleEmailInput}
           />
           {error.email && <p className="email-error error">{error.email}</p>}
@@ -123,7 +124,6 @@ function FormValidation() {
               placeholder="Enter password"
               id="password-input"
               className="input-field"
-              value={formData.pass}
               onChange={handlePasswordInput}
             />
             <button onClick={handleSeeIcon} className="see-pass-btn">
@@ -143,7 +143,6 @@ function FormValidation() {
             placeholder="Enter password"
             id="confirm-password-input"
             className="input-field"
-            value={formData.confirmPass}
             onChange={handleConfirmPassInput}
           />
           {error.confirmPass && (
@@ -151,7 +150,7 @@ function FormValidation() {
           )}
         </div>
         <div className="button-container">
-          <button className="sign-up-btn" type="submit">
+          <button className="sign-up-btn" type="submit" ref={refSubmitbtn}>
             Sign Up
           </button>
         </div>
