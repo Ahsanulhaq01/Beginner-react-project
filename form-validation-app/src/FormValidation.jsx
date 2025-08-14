@@ -2,9 +2,13 @@ import { useState } from "react";
 
 function FormValidation() {
   const [name, setName] = useState("");
+  const [errorName , setErrorName] = useState('')
   const [email, setEmail] = useState("");
+  const [emailError ,setEmailError] = useState('')
   const [password, setPassword] = useState("");
+  const [errorPass , setErrorPass] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorConfirmPass , setErrorConfirmPass] = useState("");
   const [seePass , setSeePass] = useState(false);
 
     
@@ -51,7 +55,7 @@ function FormValidation() {
             value={name}
             onChange={handleNameInput}
           />
-          {name.length < 3 ? <p className="name-error">Name is Invalid</p>:<p className="name-suggest">Name is Valid</p>}
+          {name.length < 3 ? <p className="name-error">Name is Invalid</p>:" "}
         </div>
         <div className="email-container containers">
           <label htmlFor="email-input">Email :</label>
@@ -61,10 +65,10 @@ function FormValidation() {
             required
             id="email-input"
             className="input-field"
-            pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
             value={email}
             onChange={handleEmailInput}
           />
+
         </div>
         <div className="password-container containers">
           <label htmlFor="password-input">Password</label>
