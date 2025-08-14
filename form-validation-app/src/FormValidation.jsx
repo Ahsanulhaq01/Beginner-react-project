@@ -15,13 +15,17 @@ function FormValidation() {
     //   ...preData ,
     //   name : inputName,
     // }))
+   
     setFormData({name : inputName})
     if (inputName.trim() === "") {
       setError({ name: "name is required" });
+      event.target.style.border = '2px solid red';
     } else if (inputName.trim().length < 3) {
       setError({ name: "Name must be at least of three letter" });
+       event.target.style.border = '2px solid red';
     } else {
       setError({ name: "" });
+      event.target.style.border = '2px solid green';
     }
   }
   function handleEmailInput(event) {
@@ -32,10 +36,13 @@ function FormValidation() {
     }));
     if (inputEmail.trim() === "") {
       setError({ email: "Email is required" });
+      event.target.style.border = '2px solid red'
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       setError({ email: "Enter the valid email" });
+      event.target.style.border = '2px solid red'
     } else {
       setError({ email: "" });
+      event.target.style.border = '2px solid green';
     }
   }
   function handlePasswordInput(event) {
@@ -46,10 +53,13 @@ function FormValidation() {
     }));
     if (passInput.trim() === "") {
       setError({ pass: "Password is required " });
+      event.target.style.border = '2px solid red'
     } else if (passInput.length !== 8) {
       setError({ pass: "Password must be of 8 character" });
+      event.target.style.border = '2px solid red'
     } else {
       setError({ pass: "" });
+      event.target.style.border = '2px solid green';
     }
   }
   function handleConfirmPassInput(event) {
@@ -61,10 +71,13 @@ function FormValidation() {
 
     if (inputConfirmPass.trim() === "") {
       setError({ confirmPass: "confirm password is required" });
+      event.target.style.border = '2px solid red'
     } else if (inputConfirmPass !== formData.pass) {
       setError({ confirmPass: "Pasword must be same " });
+      event.target.style.border = '2px solid red'
     } else {
       setError({ confirmPass: "" });
+      event.target.style.border = '2px solid green';
     }
   }
   function handleSubmit() {
