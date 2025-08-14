@@ -67,12 +67,13 @@ function FormValidation() {
       setError({ confirmPass: "" });
     }
   }
-  function handleNewUser() {
+  function handleSubmit() {
     console.log(formData);
   }
 
   return (
     <>
+    <form onSubmit={handleSubmit}>
       <div className="app-container">
         <h1 className="heading">Sign Up</h1>
         <div className="name-container containers">
@@ -137,11 +138,12 @@ function FormValidation() {
           )}
         </div>
         <div className="button-container">
-          <button className="sign-up-btn" onClick={handleNewUser}>
+          <button className="sign-up-btn" type="submit">
             Sign Up
           </button>
         </div>
       </div>
+      </form>
     </>
   );
 }
