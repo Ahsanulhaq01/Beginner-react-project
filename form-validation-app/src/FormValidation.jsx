@@ -2,7 +2,9 @@ import { useState } from "react";
 
 function FormValidation() {
   const [seePass, setSeePass] = useState(true);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(
+    JSON.parse(localStorage.getItem("data")) || {}
+  );
   const [error, setError] = useState({});
 
   function handleSeeIcon() {
@@ -11,12 +13,12 @@ function FormValidation() {
 
   function handleNameInput(event) {
     const inputName = event.target.value;
-    // setFor(preData=>({
-    //   ...preData ,
-    //   name : inputName,
-    // }))
+    setFormData((preData) => ({
+      ...preData,
+      name: inputName,
+    }));
 
-    setFormData({ name: inputName });
+    // setFormData({ name: inputName });//
     if (inputName.trim() === "") {
       setError({ name: "name is required" });
       event.target.style.border = "2px solid red";
@@ -37,7 +39,7 @@ function FormValidation() {
     if (inputEmail.trim() === "") {
       setError({ email: "Email is required" });
       event.target.style.border = "2px solid red";
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+    } else if (!/^\S+@\S+\.\S+$/.test(inputEmail)) {
       setError({ email: "Enter the valid email" });
       event.target.style.border = "2px solid red";
     } else {
@@ -80,14 +82,15 @@ function FormValidation() {
       event.target.style.border = "2px solid green";
     }
   }
-  function handleSubmit(event){
+  function handleSubmit(event) {
     event.preventDefault();
-    alert('form successfully submitted')
+    localStorage.setItem("data", JSON.stringify(formData));
+    alert("form successfully submitted");
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={handleSubmit}>
         <div className="app-container">
           <h1 className="heading">Sign Up</h1>
           <div className="name-container containers">
@@ -124,7 +127,11 @@ function FormValidation() {
                 className="input-field"
                 onChange={handlePasswordInput}
               />
-              <button onClick={handleSeeIcon} className="see-pass-btn">
+              <button
+                onClick={handleSeeIcon}
+                className="see-pass-btn"
+                type="button"
+              >
                 {seePass ? (
                   <i className="fa fa-eye"></i>
                 ) : (
@@ -151,9 +158,10 @@ function FormValidation() {
             <button
               className="sign-up-btn"
               type="submit"
-              // disabled={!!(error.name||error.email||error.pass||error.confirmPass )}
-              disabled = {Object.values(error).some(err => err !== '')}
-
+              disabled={
+                !!(error.name || error.email || error.pass || error.confirmPass)
+              }
+              // disabled={Object.values(error).some((err) => err !== "")}
             >
               Sign Up
             </button>
