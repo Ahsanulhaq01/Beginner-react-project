@@ -6,6 +6,8 @@ function FormValidation() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [seePass, setSeePass] = useState(false);
+
+  const [formData , setFormData] = useState({});
   const [error ,setError] = useState({});
 
   function handleSeeIcon() {
@@ -17,6 +19,11 @@ function FormValidation() {
   function handleNameInput(event) {
     const inputName = event.target.value;
     setName(inputName);
+    // setFor(preData=>({
+    //   ...preData ,
+    //   name : inputName,
+    // }))
+    setFormData({name : inputName})
     if (inputName.trim() === "") {
       setError({name :'name is required'});
     } else if (inputName.trim().length < 3) {
@@ -28,6 +35,10 @@ function FormValidation() {
   function handleEmailInput(event) {
     const inputEmail = event.target.value;
     setEmail(inputEmail);
+    setFormData(preData =>({
+      ...preData,
+      email : inputEmail,
+    }))
     if (inputEmail.trim() === "") {
       setError({email : "Email is required"});
     } else if (!/^\S+@\S+\.\S+$/.test(email)) {
@@ -39,6 +50,10 @@ function FormValidation() {
   function handlePasswordInput(event) {
     const passInput = event.target.value;
     setPassword(passInput);
+    setFormData(preData =>({
+      ...preData,
+      pass : passInput,
+    }))
     if (passInput.trim() === "") {
       setError({pass : "Password is required "});
     } else if (passInput.length !== 8) {
@@ -50,6 +65,10 @@ function FormValidation() {
   function handleConfirmPassInput(event) {
     const inputConfirmPass = event.target.value;
     setConfirmPassword(inputConfirmPass);
+    setFormData(preData =>({
+      ...preData,
+      confirmPass : inputConfirmPass,
+    }))
 
     if (inputConfirmPass.trim() === "") {
       setError({confirmPass : "confirm password is required"});
@@ -59,7 +78,9 @@ function FormValidation() {
       setError({confirmPass : ""});
     }
   }
-  function handleNewUser() {}
+  function handleNewUser() {
+    console.log(formData);
+  }
 
   return (
     <>
