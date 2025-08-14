@@ -1,81 +1,70 @@
 import { useState } from "react";
 
 function FormValidation() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [seePass, setSeePass] = useState(false);
-
-  const [formData , setFormData] = useState({});
-  const [error ,setError] = useState({});
+  const [seePass, setSeePass] = useState(true);
+  const [formData, setFormData] = useState({});
+  const [error, setError] = useState({});
 
   function handleSeeIcon() {
-    
-       setSeePass(seePass ? false : true);
-   
+    setSeePass(seePass ? false : true);
   }
 
   function handleNameInput(event) {
     const inputName = event.target.value;
-    setName(inputName);
     // setFor(preData=>({
     //   ...preData ,
     //   name : inputName,
     // }))
     setFormData({name : inputName})
     if (inputName.trim() === "") {
-      setError({name :'name is required'});
+      setError({ name: "name is required" });
     } else if (inputName.trim().length < 3) {
-      setError({name : "Name must be at least of three letter"});
+      setError({ name: "Name must be at least of three letter" });
     } else {
-      setError({name : ''});
+      setError({ name: "" });
     }
   }
   function handleEmailInput(event) {
     const inputEmail = event.target.value;
-    setEmail(inputEmail);
-    setFormData(preData =>({
+    setFormData((preData) => ({
       ...preData,
-      email : inputEmail,
-    }))
+      email: inputEmail,
+    }));
     if (inputEmail.trim() === "") {
-      setError({email : "Email is required"});
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      setError({email : "Enter the valid email"});
+      setError({ email: "Email is required" });
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      setError({ email: "Enter the valid email" });
     } else {
-      setError({email : ""});
+      setError({ email: "" });
     }
   }
   function handlePasswordInput(event) {
     const passInput = event.target.value;
-    setPassword(passInput);
-    setFormData(preData =>({
+    setFormData((preData) => ({
       ...preData,
-      pass : passInput,
-    }))
+      pass: passInput,
+    }));
     if (passInput.trim() === "") {
-      setError({pass : "Password is required "});
+      setError({ pass: "Password is required " });
     } else if (passInput.length !== 8) {
-      setError({pass:"Password must be of 8 character"});
+      setError({ pass: "Password must be of 8 character" });
     } else {
-      setError({pass :""});
+      setError({ pass: "" });
     }
   }
   function handleConfirmPassInput(event) {
     const inputConfirmPass = event.target.value;
-    setConfirmPassword(inputConfirmPass);
-    setFormData(preData =>({
+    setFormData((preData) => ({
       ...preData,
-      confirmPass : inputConfirmPass,
-    }))
+      confirmPass: inputConfirmPass,
+    }));
 
     if (inputConfirmPass.trim() === "") {
-      setError({confirmPass : "confirm password is required"});
-    } else if (inputConfirmPass !== password) {
-      setError({confirmPass : "Pasword must be same "});
+      setError({ confirmPass: "confirm password is required" });
+    } else if (inputConfirmPass !== formData.pass) {
+      setError({ confirmPass: "Pasword must be same " });
     } else {
-      setError({confirmPass : ""});
+      setError({ confirmPass: "" });
     }
   }
   function handleNewUser() {
@@ -94,7 +83,7 @@ function FormValidation() {
             id="name-input"
             required
             className="input-field"
-            value={name}
+            value={formData.name}
             onChange={handleNameInput}
           />
           {error.name && <p className="name-error error">{error.name}</p>}
@@ -107,7 +96,7 @@ function FormValidation() {
             required
             id="email-input"
             className="input-field"
-            value={email}
+            value={formData.email}
             onChange={handleEmailInput}
           />
           {error.email && <p className="email-error error">{error.email}</p>}
@@ -120,7 +109,7 @@ function FormValidation() {
               placeholder="Enter password"
               id="password-input"
               className="input-field"
-              value={password}
+              value={formData.pass}
               onChange={handlePasswordInput}
             />
             <button onClick={handleSeeIcon} className="see-pass-btn">
@@ -135,14 +124,14 @@ function FormValidation() {
         </div>
         <div className="confirm-password-container containers">
           <label htmlFor="confirm-password-input">Confirm Password</label>
-            <input
-              type={seePass ? "password" : "text"}
-              placeholder="Enter password"
-              id="confirm-password-input"
-              className="input-field"
-              value={confirmPassword}
-              onChange={handleConfirmPassInput}
-            />
+          <input
+            type={seePass ? "password" : "text"}
+            placeholder="Enter password"
+            id="confirm-password-input"
+            className="input-field"
+            value={formData.confirmPass}
+            onChange={handleConfirmPassInput}
+          />
           {error.confirmPass && (
             <p className="pass-error error">{error.confirmPass}</p>
           )}
