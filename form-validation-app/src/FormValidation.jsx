@@ -2,83 +2,64 @@ import { useState } from "react";
 
 function FormValidation() {
   const [name, setName] = useState("");
-  const [errorName, setErrorName] = useState("");
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
-  const [errorPass, setErrorPass] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorConfirmPass, setErrorConfirmPass] = useState("");
   const [seePass, setSeePass] = useState(false);
+  const [error ,setError] = useState({});
 
   function handleSeeIcon() {
-    setSeePass(seePass ? false : true);
+    
+       setSeePass(seePass ? false : true);
+   
   }
 
   function handleNameInput(event) {
     const inputName = event.target.value;
-    console.log(inputName)
     setName(inputName);
-    if(inputName.trim() === ''){
-      setErrorName('Enter your name')
-    }
-    else if(inputName.trim().length < 3){
-        setErrorName('Name must be at least of three letter')
-    }
-    else{
-      setErrorName('');
+    if (inputName.trim() === "") {
+      setError({name :'name is required'});
+    } else if (inputName.trim().length < 3) {
+      setError({name : "Name must be at least of three letter"});
+    } else {
+      setError({name : ''});
     }
   }
   function handleEmailInput(event) {
     const inputEmail = event.target.value;
     setEmail(inputEmail);
-    if(inputEmail.trim() === ''){
-      setEmailError('Email is required');
+    if (inputEmail.trim() === "") {
+      setError({email : "Email is required"});
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setError({email : "Enter the valid email"});
+    } else {
+      setError({email : ""});
     }
-    else if(!/^\S+@\S+\.\S+$/.test(email)){
-      setEmailError('Enter the valid email')
-    }
-    else{
-      setEmailError('');
-    }
-
   }
   function handlePasswordInput(event) {
     const passInput = event.target.value;
     setPassword(passInput);
-    if(passInput.trim() === ''){
-      setErrorPass('Password is required ')
-    }
-    else if(passInput.length !== 8){
-      setErrorPass('Password must be of 8 character')
-    }
-    else{
-      setErrorPass('');
+    if (passInput.trim() === "") {
+      setError({pass : "Password is required "});
+    } else if (passInput.length !== 8) {
+      setError({pass:"Password must be of 8 character"});
+    } else {
+      setError({pass :""});
     }
   }
   function handleConfirmPassInput(event) {
     const inputConfirmPass = event.target.value;
     setConfirmPassword(inputConfirmPass);
 
-    if(inputConfirmPass.trim()===''){
-      setErrorConfirmPass('confirm password is required')
-    }
-    else if(inputConfirmPass !== password){
-      setErrorConfirmPass('Pasword must be same ')
-    }
-    else{
-      setErrorConfirmPass('')
-    }
-
-  }
-  function handleNewUser() {
-    if (name === "") {
-      alert("Enter Your Name");
-    }
-    if (name.length > 1 && name.length < 3) {
-      alert("UserName must be greater that of 3 letter");
+    if (inputConfirmPass.trim() === "") {
+      setError({confirmPass : "confirm password is required"});
+    } else if (inputConfirmPass !== password) {
+      setError({confirmPass : "Pasword must be same "});
+    } else {
+      setError({confirmPass : ""});
     }
   }
+  function handleNewUser() {}
 
   return (
     <>
@@ -95,7 +76,7 @@ function FormValidation() {
             value={name}
             onChange={handleNameInput}
           />
-          { errorName && <p className="name-error error">{errorName}</p>}
+          {error.name && <p className="name-error error">{error.name}</p>}
         </div>
         <div className="email-container containers">
           <label htmlFor="email-input">Email :</label>
@@ -108,7 +89,7 @@ function FormValidation() {
             value={email}
             onChange={handleEmailInput}
           />
-          {emailError && <p className = "email-error error">{emailError}</p>}
+          {error.email && <p className="email-error error">{error.email}</p>}
         </div>
         <div className="password-container containers">
           <label htmlFor="password-input">Password</label>
@@ -118,31 +99,32 @@ function FormValidation() {
               placeholder="Enter password"
               id="password-input"
               className="input-field"
-              pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,}$/"
               value={password}
               onChange={handlePasswordInput}
             />
             <button onClick={handleSeeIcon} className="see-pass-btn">
               {seePass ? (
-                <i class="fa fa-eye"></i>
+                <i className="fa fa-eye"></i>
               ) : (
-                <i class="fa fa-eye-slash"></i>
+                <i className="fa fa-eye-slash"></i>
               )}
             </button>
           </div>
-           {errorPass && <p className="pass-error error">{errorPass}</p>}
+          {error.pass && <p className="pass-error error">{error.pass}</p>}
         </div>
         <div className="confirm-password-container containers">
           <label htmlFor="confirm-password-input">Confirm Password</label>
-          <input
-            type="password"
-            placeholder="Enter password"
-            id="confirm-password-input"
-            className="input-field"
-            value={confirmPassword}
-            onChange={handleConfirmPassInput}
-          />
-          {errorConfirmPass && <p className="pass-error error">{errorConfirmPass}</p>}
+            <input
+              type={seePass ? "password" : "text"}
+              placeholder="Enter password"
+              id="confirm-password-input"
+              className="input-field"
+              value={confirmPassword}
+              onChange={handleConfirmPassInput}
+            />
+          {error.confirmPass && (
+            <p className="pass-error error">{error.confirmPass}</p>
+          )}
         </div>
         <div className="button-container">
           <button className="sign-up-btn" onClick={handleNewUser}>
