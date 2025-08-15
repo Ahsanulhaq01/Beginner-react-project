@@ -6,7 +6,7 @@ function FormValidation() {
     JSON.parse(localStorage.getItem("data")) || {}
   );
   const [error, setError] = useState({});
-
+  console.log(formData)
   function handleSeeIcon() {
     setSeePass(seePass ? false : true);
   }
