@@ -2,13 +2,12 @@ import React from "react";
 import Head from "./component/Head";
 import TaskInput from "./component/TaskInput";
 
-function App(){
-  return(
-
+function App() {
+  return (
     <div className="main-container">
-    <Head/>
-    <TaskInput/>
+      <Head />
+      <TaskInput />
     </div>
-  )
+  );
 }
 export default App;
