@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState,  useEffect } from "react";
 import sunImage from "./assets/sun.png";
 import cloudImage from "./assets/cloud.png";
-import { FiSearch } from "react-icons/fi";
+import Header from "./Component/Header";
 import "./App.css";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     JSON.parse(localStorage.getItem("inputvalue")) || ""
   );
 
-  const refSearchButton = useRef(null);
+ 
 
   useEffect(() => {
     localStorage.setItem("weather", JSON.stringify(weather));
@@ -49,40 +49,24 @@ function App() {
     }
   }
 
-  function handleSearchButton() {
-    getData(inputvalue);
-    setInputValue("");
-  }
-  function HandlekeyDown(event) {
-    if (event.key === "Enter") {
-      refSearchButton.current.click();
-      getData(inputvalue);
-      setInputValue("");
-    }
-  }
-  function handleOnChange(event) {
-    setInputValue(event.target.value.toUpperCase());
-  }
+  // function handleSearchButton() {
+  //   getData(inputvalue);
+  //   setInputValue("");
+  // }
+  // function HandlekeyDown(event) {
+  //   if (event.key === "Enter") {
+  //     refSearchButton.current.click();
+  //     getData(inputvalue);
+  //     setInputValue("");
+  //   }
+  // }
+  // function handleOnChange(event) {
+  //   setInputValue(event.target.value.toUpperCase());
+  // }
 
   return (
     <div className="app-container">
-      <div className="nav-container">
-        <input
-          onChange={handleOnChange}
-          onKeyDown={HandlekeyDown}
-          value={inputvalue}
-          placeholder="Enter the city name"
-          className="input-element"
-        />
-        <button
-          onClick={handleSearchButton}
-          ref={refSearchButton}
-          className="search-button"
-        >
-          <FiSearch size={18} className="search-button" />
-        </button>
-      </div>
-
+      <Header inputvalue={inputvalue} setInputValue={setInputValue} getData={getData} />
       <div className="hero-section">
         <div className="city-info">
           <h2 className="city-name"> {weather.location}</h2>
